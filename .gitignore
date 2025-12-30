@@ -40,3 +40,6 @@ keys.txt
 # Ignore requirements lock files if generated
 poetry.lock
 Pipfile.lock
+
+
+learn.py
