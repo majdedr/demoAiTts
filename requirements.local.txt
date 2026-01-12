@@ -1,5 +1,11 @@
+# Dev tools + test dependencies
+pytest
+pytest-asyncio
+httpx
+
+# Optional runtime dependencies for local dev
 fastapi
 uvicorn
 pyttsx3
 SpeechRecognition
-pyaudio
+pyaudio ; platform_system == "Windows"

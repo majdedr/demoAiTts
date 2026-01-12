@@ -6,8 +6,11 @@ __pycache__/
 
 # Virtual environment
 venv/
-.env/
-.envrc
+.venv/
+
+# Environment files
+.env
+.env.local
 
 # Distribution / packaging
 build/
@@ -16,30 +19,30 @@ dist/
 
 # IDE/editor files
 .vscode/
+.idea/
 *.swp
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Docker
+# Docker & logs
 *.log
 *.pid
-.dockerignore
 
 # Keys and secrets
 keys.txt
 
-# Local configuration
+# Local configuration (but keep requirements.local)
 *.local
-*.env
+!requirements.local
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Ignore requirements lock files if generated
-poetry.lock
-Pipfile.lock
+# Optional: lock files if using Poetry/Pipenv
+# poetry.lock
+# Pipfile.lock
 
-
+# Ignore experimental scripts
 learn.py
