@@ -1,0 +1,2 @@
+Connecteam is a workforce management platform for deskless employees.
+It helps with scheduling, communication, and task management.

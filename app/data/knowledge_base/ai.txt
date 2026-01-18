@@ -1,0 +1,2 @@
+Retrieval-Augmented Generation (RAG) improves AI answers by using external knowledge.
+It reduces hallucinations and increases accuracy.

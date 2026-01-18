@@ -1,19 +1,39 @@
-
 import logging
+from typing import List, Dict
+
 from app.core.error_handling import ServiceError
 from app.models.schemas import ChatRequest
 
-conversation_history = []
+from app.services.llm import LLMClient, LLMRequest
+from app.services.vector_store import vector_store
+from app.services.llm.schemas import LLMResponse
 
-def get_ai_response(request: ChatRequest) -> str:
+
+logger = logging.getLogger(__name__)
+
+# Simple in-memory conversation history (per process)
+conversation_history: List[Dict[str, str]] = []
+
+# Initialize LLM once (important for performance)
+llm = LLMClient(
+    r"C:\Users\user1\Desktop\demoAiGetRepo\demoAiTts\app\models\tinyllama-1.1b-chat-v1.0.Q4_K_S.gguf"
+)
+
+
+async def get_ai_response(request: LLMRequest) -> LLMResponse:
     try:
-        # Validate request (pydantic will auto-validate, but explicit call for clarity)
-        request = ChatRequest(**request.dict()) if not isinstance(request, ChatRequest) else request
-        conversation_history.append({"role": "user", "content": request.text})
-        # Mock AI
-        ai_reply = f"AI response to: {request.text} (max_tokens={request.max_tokens})"
-        conversation_history.append({"role": "assistant", "content": ai_reply})
-        return ai_reply
+        # Call your LLM client
+        llm_response = await llm.generate(request)  # returns a string
+
+        # Wrap it in the response model
+        response = LLMResponse(
+            text=llm_response,  # the string
+            model="TinyLlama-1.1B",  # or whatever model you are using
+            tokens_used=None  # optional, if you track tokens
+        )
+
+        return response
+
     except Exception as e:
-        logging.exception("AI service failed")
-        raise ServiceError("AI service failed to generate a response.")
+        logger.error("AI service failed", exc_info=True)
+        raise ServiceError("AI service failed to generate a response.") from e
